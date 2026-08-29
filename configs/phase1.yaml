@@ -1,0 +1,37 @@
+# Phase 1 Training and Model Configurations
+# Sentinel-2 Super-Resolution Mapping (SRM)
+
+model:
+  name: "Residual SwinIR"
+  upscale: 4
+  in_channels: 4   # B04 (Red), B03 (Green), B02 (Blue), B08 (NIR)
+  out_channels: 4  # Super-resolved 2.5m RGBN
+  img_size: 64     # Input patch size (LR)
+  window_size: 8
+  img_range: 1.0
+  depths: [6, 6, 6, 6]
+  num_heads: [6, 6, 6, 6]
+  embed_dim: 60
+  mlp_ratio: 2.0
+  upsampler: "pixelshuffle"
+  resi_connection: "1conv"
+
+dataset:
+  name: "SEN2NAIPv2"
+  train_samples: 199
+  val_samples: 50
+  test_samples: 50
+  patch_size_lr: 64
+  patch_size_hr: 256
+  normalization:
+    scale_factor: 10000.0  # Input reflectances scaled to [0, 1]
+
+training:
+  epochs: 100
+  batch_size: 2
+  learning_rate: 4.0e-4
+  optimizer: "AdamW"
+  scheduler: "CosineAnnealingLR"
+  precision: "AMP"  # Mixed precision for 4GB VRAM target (RTX 2050)
+  loss: "L1"
+  residual_mode: "bicubic_residual"  # SR = Bicubic(LR) + learned_residual

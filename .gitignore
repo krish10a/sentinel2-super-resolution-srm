@@ -1,0 +1,43 @@
+# Python Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python caching
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Testing and Type Checking Caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs and Caches
+*.log
+*.tmp
+*.bak
+pip-log.txt
+poetry.lock
+yarn-error.log
+
+# Datasets and GeoTIFFs (Exclude heavy data)
+data/processed/sample_*/
+data/raw/
+data/real_s2/
+data/test/
+*.tif
+*.tiff
+*.jp2
+
+# Checkpoints (Ignore all checkpoints except the primary benchmark weight)
+checkpoints/*.pth
+!checkpoints/best_residual_swinir_100ep.pth
